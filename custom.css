@@ -1,0 +1,35 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 10px;
+}
+header h1, header p {
+    text-align: center;
+    font-weight: bolder;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td {
+    border-bottom: 1px solid black;
+    padding: 2px;
+}
+
+thead {
+    font-weight: bolder;
+}
+
+tr:hover {
+    background-color: #c5c5c5;
+}
+
+.positive {
+    background-color: gold;
+    color : #fff;
+}
+
+.coeff {
+    font-weight: bolder;
+}
