@@ -35,13 +35,15 @@ function get_odds() {
                             name: match.HomeTeam,
                             odd: match.BestOdds[0].Value,
                             pid: match.BestOdds[0].ProviderId,
-                            sid : match.SportId
+                            sid : match.SportId,
+                            time : match.StartTime
                         },
                         {
                             name: match.AwayTeam,
                             odd: match.BestOdds[1].Value,
                             pid: match.BestOdds[1].ProviderId,
-                            sid : match.SportId
+                            sid : match.SportId,
+                            time : match.StartTime
                         }
                     ]
                     new_data.push(object.sort(function (a, b) { return a.odd - b.odd }))
@@ -132,8 +134,11 @@ get_providers()
             let array_profit = profit([data[i][0].odd, data[i][1].odd])
             let color = (array_profit[0] > 0 && array_profit[1]) ? 'positive' : 'negative'
 
+            let time = new Date(data[i][0].time)
+            let str_time = time.toLocaleString()
+
             table += `<tr class=${color}>`
-            table += `<td>${serach_sports_by_id(data[i][0].sid).Name}</td>`
+            table += `<td>${serach_sports_by_id(data[i][0].sid).Name}<br/><span class='time'>${str_time}</span></td>`
             table += `<td>${data[i][0].name}</td>`
             table += `<td><span class='coeff'>x${data[i][0].odd}</span>, $${MONEY}<br/>${serach_providers_by_id(data[i][0].pid).Name}</td>`
             table += `<td>${data[i][1].name}</td>`
