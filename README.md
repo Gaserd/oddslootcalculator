@@ -1,3 +1,3 @@
 # oddslootcalculator
 
-link -> https://gaserd.github.io/oddslootcalculator/index.html
+link -> https://gaserd.github.io/oddslootcalculator/
