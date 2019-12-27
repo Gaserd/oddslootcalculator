@@ -1,4 +1,5 @@
 let MONEY = 10
+let ODDS = []
 let PROVIDERS = []
 let SPORTS = []
 
@@ -21,41 +22,54 @@ function get_odds() {
                 let new_data = []
                 for (let i = 0; i < data.length; i++) {
                     let match = data[i]
+                    let array_best = []
 
-                    if (
-                        (match.BestOdds[0].OddTypeId - match.BestOdds[1].OddTypeId) == 1
-                        ||
-                        (match.BestOdds[0].OddTypeId - match.BestOdds[1].OddTypeId) == -1
-                    ) {
-                        match.BestOdds.sort(function (a, b) { return a.OddTypeId - b.OddTypeId })
+
+
+                    for (let j = 0; j < match.Odds.length; j = j + 2) {
+                        let object = [
+                            {
+                                name: match.HomeTeam,
+                                odd: match.Odds[j].Value,
+                                pid: match.Odds[j].ProviderId,
+                                sid: match.SportId,
+                                time: match.StartTime
+                            },
+                            {
+                                name: match.AwayTeam,
+                                odd: match.Odds[j + 1].Value,
+                                pid: match.Odds[j + 1].ProviderId,
+                                sid: match.SportId,
+                                time: match.StartTime
+                            }
+                        ]
+                        array_best.push(object.sort(function (a, b) { return a.odd - b.odd }))
                     }
 
-                    let object = [
-                        {
-                            name: match.HomeTeam,
-                            odd: match.BestOdds[0].Value,
-                            pid: match.BestOdds[0].ProviderId,
-                            sid : match.SportId,
-                            time : match.StartTime
-                        },
-                        {
-                            name: match.AwayTeam,
-                            odd: match.BestOdds[1].Value,
-                            pid: match.BestOdds[1].ProviderId,
-                            sid : match.SportId,
-                            time : match.StartTime
+                    for (let k = 0; k < array_best.length; k++) {
+
+                        for (let m = 0; m < array_best.length; m++) {
+                            if (array_best[k][0].name !== array_best[m][1].name) {
+                                let pr = profit([
+                                    array_best[k][0].odd,
+                                    array_best[m][1].odd
+                                ])
+                                if (pr[0] > 0 && pr[1] > 0) {
+                                    new_data.push([
+                                        array_best[k][0], array_best[m][1]
+                                    ])
+                                }
+                            }
                         }
-                    ]
-                    new_data.push(object.sort(function (a, b) { return a.odd - b.odd }))
+                    }
+
                 }
                 return new_data
-
             } else {
                 return data
             }
         })
         .catch(e => {
-            console.log(e)
             return []
         })
 }
@@ -104,23 +118,33 @@ function serach_sports_by_id(id) {
     return sport
 }
 
-
-
-
-get_providers()
-    .then(data => PROVIDERS = data)
-    .then(data => {
-        return get_sports()
+function get_all_data() {
+    return new Promise((resolve, reject) => {
+        get_providers()
+            .then(data => PROVIDERS = data)
+            .then(data => {
+                return get_sports()
+            })
+            .then(data => SPORTS = data)
+            .then(data => {
+                return get_odds()
+            })
+            .then(data => {
+                ODDS = data
+            })
+            .then(data => {
+                resolve()
+            })
+            .catch(e => reject())
     })
-    .then(data => SPORTS = data)
-    .then(data => {
-        return get_odds()
-    })
-    .then(data => {
-        let container = document.querySelector('.container')
-        let table = '<table><tbody>'
+}
 
-        table += `<thead>
+function render_table() {
+    let data = ODDS
+    let container = document.querySelector('.container')
+    let table = '<table><tbody>'
+
+    table += `<thead>
                 <td>Game</td>
                 <td>First Team</td>
                 <td>First Bet</td>
@@ -129,25 +153,50 @@ get_providers()
                 <td>Profit</td>
             </thead>`
 
-        for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
 
-            let array_profit = profit([data[i][0].odd, data[i][1].odd])
-            let color = (array_profit[0] > 0 && array_profit[1]) ? 'positive' : 'negative'
+        let array_profit = profit([data[i][0].odd, data[i][1].odd])
 
-            let time = new Date(data[i][0].time)
-            let str_time = time.toLocaleString()
+        let time = new Date(data[i][0].time)
+        let str_time = time.toLocaleString()
 
-            table += `<tr class=${color}>`
-            table += `<td>${serach_sports_by_id(data[i][0].sid).Name}<br/><span class='time'>${str_time}</span></td>`
-            table += `<td>${data[i][0].name}</td>`
-            table += `<td><span class='coeff'>x${data[i][0].odd}</span>, $${MONEY}<br/>${serach_providers_by_id(data[i][0].pid).Name}</td>`
-            table += `<td>${data[i][1].name}</td>`
-            table += `<td><span class='coeff'>x${data[i][1].odd}</span>, $${get_reverse_money([data[i][0].odd, data[i][1].odd])}<br/>${serach_providers_by_id(data[i][1].pid).Name}</td>`
-            table += `<td>$${array_profit[0]}/$${array_profit[1]}</td>`
-            table += '</tr>'
-        }
+        table += `<tr>`
+        table += `<td>${serach_sports_by_id(data[i][0].sid).Name}<br/><span class='time'>${str_time}</span></td>`
+        table += `<td>${data[i][0].name}</td>`
+        table += `<td><span class='coeff'>x${data[i][0].odd}</span>, $${MONEY}<br/>${serach_providers_by_id(data[i][0].pid).Name}</td>`
+        table += `<td>${data[i][1].name}</td>`
+        table += `<td><span class='coeff'>x${data[i][1].odd}</span>, $${get_reverse_money([data[i][0].odd, data[i][1].odd])}<br/>${serach_providers_by_id(data[i][1].pid).Name}</td>`
+        table += `<td>$${array_profit[0]}/$${array_profit[1]}</td>`
+        table += '</tr>'
+    }
 
-        table += '<tbody></table>'
-        container.innerHTML = table
+    table += '<tbody></table>'
+    container.innerHTML = table
+}
 
+function delete_table() {
+    let container = document.querySelector('.container')
+    container.innerHTML = ''
+}
+
+function get_input_money() {
+    let input = document.querySelector('#money')
+    return Number(input.value)
+}
+
+function main() {
+    MONEY = get_input_money()
+    get_all_data()
+        .then(data => {
+            delete_table()
+            render_table()
+        })
+    
+    document.querySelector('#money').addEventListener('change', function(e) {
+        MONEY = Number(e.target.value)
+        delete_table()
+        render_table()
     })
+}
+
+main()
