@@ -33,3 +33,29 @@ tr:hover {
     font-size: 13px;
     font-weight: bolder;
 }
+
+.menu {
+    display: flex;
+}
+
+ul.menu  {
+    padding: 0;
+}
+
+.menu li {
+    list-style: none;
+    margin-right: 5px;
+    padding-right: 5px;
+    border-right: 1px solid black;
+}
+
+.net_gold {
+    background-color: goldenrod;
+    color: #fff;
+}
+
+.canvas-chart {
+    position: relative; 
+    height:40vh; 
+    width:80vw;
+}

@@ -1,5 +1,5 @@
 <html>
-<title>Oddsloot calculator</title>
+<title>Live Dota 2</title>
 <meta charset="UTF-8">
 <meta name="description" content="It parses data from oddsloot.com and considers where you would put the most profitable.">
 <meta name="keywords" content="odds,betting,tips,profit">
@@ -9,18 +9,8 @@
 <link rel="stylesheet" type="text/css" href="./custom.css">
 
 <body>
-    <h1>Oddsloot Calculator</h1>
-    <p>Money for betts – $ <input id='money' type='number' value='10'></input></p>
-    <p>This project works very simply.
-        <br />
-        It parses data from oddsloot.com and considers where you would put the most profitable.
-        <br />
-        He thinks based on the fact that the main bet is the first team and it will be $10, then calculates how much you
-        need to put on the 2 bet so that you are in the black.
-        <br />
-        It highlights the best outcomes in gold, where you will be in the black if you win any of the teams.
-        <br />
-        Under each bet written by the bookmaker where it is necessary to put a bet.</p>
+    <h1>Live Dota 2</h1>
+    <p>We parse live dota and refresh data ever 15 sec</p>
     <ul class="menu">
         <li><a href='./index.html'>Prematch Profit Calculator</a></li>
         <li><a href='./live.html'>Live Dota 2</a></li>
@@ -32,16 +22,11 @@
     <h3>Patch notes</h3>
     <p>Version 1.0</p>
     <ul>
-        <li>added table forks</li>
-    </ul>
-    <p>Version 1.1</p>
-    <ul>
-        <li>delete negative forks and delete gold color for positive forks</li>
-        <li>added more powerfull calculations</li>
-        <li>added input for money</li>
+        <li>added live</li>
     </ul>
 </body>
-<script src='./script.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src='./live.js'></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-83599084-11"></script>
 <script>
