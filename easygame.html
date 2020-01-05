@@ -1,0 +1,34 @@
+<html>
+<title>Easy Game</title>
+<link rel="stylesheet" type="text/css" href="./normalize.css">
+<link rel="stylesheet" type="text/css" href="./easygame.css">
+<body>
+    <header>
+        <h1>EASY GAME</h1>
+        <p><a href="https://twitter.com/intent/tweet?button_hashtag=easygame&ref_src=twsrc%5Etfw"
+                class="twitter-hashtag-button" data-show-count="false">Tweet #easygame</a></p>
+        <p>
+            This is a very simple game in which you need to guess which door is the prize.</br>Do you think you can?
+        </p>
+    </header>
+    <div class='playground'>
+        <p class='question'>Which door are we going to open?</p>
+        <p class='win_lose'></p>
+        <div class='doors'>
+
+        </div>
+    </div>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <div class='create'>Create <a href='https://twitter.com/edwardbeton'>Edward</a></div>
+</body>
+<script src='./easy_game_script.js'></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-83599084-10"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-83599084-10');
+</script>
+</html>

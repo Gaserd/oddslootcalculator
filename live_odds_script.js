@@ -6,7 +6,18 @@ function get_betts_today() {
         .then(res => res.json())
 }
 
-function render_table(data) {
+function render_table(data_json) {
+
+    let data = data_json
+        data = data.sort(function(a, b) {
+        if (a.date < b.date) {
+          return -1;
+        }
+        if (a.date > b.date) {
+          return 1;
+        }
+        return 0;
+      });
 
     let container = document.querySelector('.container')
 
