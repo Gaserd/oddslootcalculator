@@ -84,11 +84,12 @@ function get_url_dotapicker(data) {
         let name = null
         for (let i = 0; i < HEROES.length; i++) {
             if (HEROES[i].id == id) {
-                name = HEROES[i].localized_name.replace(' ', '_')
+                name = HEROES[i].localized_name.replace(' ', '_').replace('\'', '')
             }
         }
         return name
     }
+
 
     if (data.dire_picks.length == 5 && data.radiant_picks.length == 5) {
         dire_picks = data.dire_picks
