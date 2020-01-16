@@ -4,10 +4,10 @@ let MATCHES = []
 
 function get_live(id) {
     return new Promise((resolve, reject) => {
-        fetch('https://cors-anywhere.herokuapp.com/https://www.trackdota.com/data/game/' + id + '/core.json')
+        fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.trackdota.com/data/game/${id}/core.json`)}`)
             .then(res => res.json())
             .then(data => {
-                resolve(data)
+                resolve(JSON.parse(data.contents))
             })
             .catch(e => reject([]))
     })
@@ -77,7 +77,7 @@ function delete_table() {
 
 
 function get_url_dotapicker(data) {
-    const url_dota_picker = 'https://dotapicker.com/herocounter?language=ru-ru#!/'
+    const url_dota_picker = 'https://dotapicker.com/herocounter?language=en-en#!/'
     let dire_picks = []
     let radiant_picks = []
 
