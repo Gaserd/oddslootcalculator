@@ -1,31 +1,6 @@
 
 let MATCHES = []
-const STEAMID = '76561198115261547'
-const KEY = '1esord3bku'
 
-function dotapicker_api(array) {
-    const dotapicker_url = `http://dotapicker.com/api/autopicker/update/${STEAMID}/${KEY}`
-    //http://dotapicker.com/api/autopicker/update/76561198115261547/1esord3bku
-
-    fetch(dotapicker_url, {
-        method: 'POST',
-        'Content-type': 'application/json',
-        body: JSON.stringify({
-            ping : true,
-            isRadiant: true, 
-            radiantPick: [31,92,69,106,61], 
-            direPick: [83,108,87,59,10], 
-            radiantBan: [], 
-            direBan: [], 
-            unavailableHeroes: [],
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data)
-    })
-
-}
 
 function get_live(id) {
     return new Promise((resolve, reject) => {
@@ -102,25 +77,6 @@ function delete_table() {
 
 
 function get_url_dotapicker(data) {
-    console.log(data)
-
-    /*
-        radiant_picks: Array(5)
-0: {hero_id: 31}
-1: {hero_id: 92}
-2: {hero_id: 69}
-3: {hero_id: 106}
-4: {hero_id: 61}
-[31,92,69,106,61]
-
-dire_picks: Array(5)
-0: {hero_id: 83}
-1: {hero_id: 108}
-2: {hero_id: 87}
-3: {hero_id: 59}
-4: {hero_id: 10}
-[83,108,87,59,10]
-    */
     const url_dota_picker = 'https://dotapicker.com/herocounter?language=ru-ru#!/'
     let dire_picks = []
     let radiant_picks = []
