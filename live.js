@@ -1,5 +1,31 @@
 
 let MATCHES = []
+const STEAMID = '76561198115261547'
+const KEY = '1esord3bku'
+
+function dotapicker_api(array) {
+    const dotapicker_url = `http://dotapicker.com/api/autopicker/update/${STEAMID}/${KEY}`
+    //http://dotapicker.com/api/autopicker/update/76561198115261547/1esord3bku
+
+    fetch(dotapicker_url, {
+        method: 'POST',
+        'Content-type': 'application/json',
+        body: JSON.stringify({
+            ping : true,
+            isRadiant: true, 
+            radiantPick: [31,92,69,106,61], 
+            direPick: [83,108,87,59,10], 
+            radiantBan: [], 
+            direBan: [], 
+            unavailableHeroes: [],
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data)
+    })
+
+}
 
 function get_live(id) {
     return new Promise((resolve, reject) => {
@@ -45,7 +71,7 @@ function render_table() {
 
     table += '<table><tbody>'
 
-        table += `<thead>
+    table += `<thead>
                 <td>ID</td>
                 <td>Tier</td>
                 <td>First Team</td>
@@ -76,6 +102,25 @@ function delete_table() {
 
 
 function get_url_dotapicker(data) {
+    console.log(data)
+
+    /*
+        radiant_picks: Array(5)
+0: {hero_id: 31}
+1: {hero_id: 92}
+2: {hero_id: 69}
+3: {hero_id: 106}
+4: {hero_id: 61}
+[31,92,69,106,61]
+
+dire_picks: Array(5)
+0: {hero_id: 83}
+1: {hero_id: 108}
+2: {hero_id: 87}
+3: {hero_id: 59}
+4: {hero_id: 10}
+[83,108,87,59,10]
+    */
     const url_dota_picker = 'https://dotapicker.com/herocounter?language=ru-ru#!/'
     let dire_picks = []
     let radiant_picks = []
@@ -100,11 +145,11 @@ function get_url_dotapicker(data) {
         if (dire_picks.length == 5 && radiant_picks.length == 5) {
             for (let i = 0; i < dire_picks.length; i++) {
                 if (i == 0) {
-                    string_url_dire_picks += `T_${getHeroesName(dire_picks[i].hero_id)}`
-                    string_url_radiant_picks += `/E_${getHeroesName(radiant_picks[i].hero_id)}`
+                    string_url_dire_picks += `E_${getHeroesName(dire_picks[i].hero_id)}`
+                    string_url_radiant_picks += `/T_${getHeroesName(radiant_picks[i].hero_id)}`
                 } else {
-                    string_url_radiant_picks += `/E_${getHeroesName(radiant_picks[i].hero_id)}`
-                    string_url_dire_picks += `/T_${getHeroesName(dire_picks[i].hero_id)}`
+                    string_url_radiant_picks += `/T_${getHeroesName(radiant_picks[i].hero_id)}`
+                    string_url_dire_picks += `/E_${getHeroesName(dire_picks[i].hero_id)}`
                 }
             }
         }
@@ -128,8 +173,8 @@ function main() {
                         let match_id = MATCHES[i].match_id
                         let url_dota_picker = get_url_dotapicker(data)
 
-                        document.querySelector('.url_dota_picker[data-id="' + match_id + '"').innerHTML = '<a href='+ url_dota_picker +' target="blank">CLICK</a>'
-                        document.querySelector('.tier[data-id="'+match_id+'"').innerHTML = data.league.tier
+                        document.querySelector('.url_dota_picker[data-id="' + match_id + '"').innerHTML = (url_dota_picker == null) ? null : '<a href=' + url_dota_picker + ' target="blank">CLICK</a>'
+                        document.querySelector('.tier[data-id="' + match_id + '"').innerHTML = data.league.tier
                     })
             }
         })
@@ -139,4 +184,4 @@ main()
 
 setInterval(function () {
     main()
-}, 15000)
+}, 8000)
