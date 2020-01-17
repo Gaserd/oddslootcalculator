@@ -1,5 +1,5 @@
 <html>
-<title>Oddsloot calculator</title>
+<title>Calculator coefficient</title>
 <meta charset="UTF-8">
 <meta name="description" content="It parses data from oddsloot.com and considers where you would put the most profitable.">
 <meta name="keywords" content="odds,betting,tips,profit">
@@ -9,18 +9,11 @@
 <link rel="stylesheet" type="text/css" href="./custom.css">
 
 <body>
-    <h1>Oddsloot Calculator</h1>
-    <p>Money for betts – $ <input id='money' type='number' value='10'></input></p>
-    <p>This project works very simply.
-        <br />
-        It parses data from oddsloot.com and considers where you would put the most profitable.
-        <br />
-        He thinks based on the fact that the main bet is the first team and it will be $10, then calculates how much you
-        need to put on the 2 bet so that you are in the black.
-        <br />
-        It highlights the best outcomes in gold, where you will be in the black if you win any of the teams.
-        <br />
-        Under each bet written by the bookmaker where it is necessary to put a bet.</p>
+    <h1>Calculator coefficient</h1>
+    <p>This is a calculator where you can calculate odds based on the bookmaker's margin based on your probabilities.</br>
+
+        You will be able to understand more clearly how profitable it will be for you to place your bid.</p>
+        <p>Let's try!</p>
     <ul class="menu">
         <li><a href='./index.html'>Prematch Profit Calculator</a></li>
         <li><a href='./live.html'>Live Dota 2</a></li>
@@ -28,22 +21,23 @@
         <li><a href='./easygame.html'>Easy game</a></li>
     </ul>
     <div class='container'>
-
+        <p>Team 1 - <span id="team_1"></span></p>
+        <p>Team 2 - <span id="team_2"></span></p>
+        <label>
+            Margin of the bookmaker
+            <input type="number" id="margin" value="0.03">
+        </label>
+        <input type="range" id="range" value="50" step="1" name="range" min="0" max="100">
     </div>
     <p>Create <a href='https://twitter.com/edwardbeton'>Edward</a></p>
     <h3>Patch notes</h3>
     <p>Version 1.0</p>
     <ul>
-        <li>added table forks</li>
+        <li>created</li>
     </ul>
-    <p>Version 1.1</p>
-    <ul>
-        <li>delete negative forks and delete gold color for positive forks</li>
-        <li>added more powerfull calculations</li>
-        <li>added input for money</li>
-    </ul>
+    
 </body>
-<script src='./script.js'></script>
+<script src='./calculator.js'></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-83599084-11"></script>
 <script>
