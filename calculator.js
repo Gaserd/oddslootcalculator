@@ -22,6 +22,7 @@ document.getElementById('range').oninput = function(e) {
 }
 
 document.getElementById('margin').oninput = function(e) {
+    document.getElementById('margin_percent').innerHTML = e.target.value * 100
     set_teams_coeff()
 }
 
