@@ -46,7 +46,7 @@ function main() {
     Coefficinet bookmaker <br/>
     <b>${coefficients[0]}</b> vs <b>${coefficients[1]}</b><br/>
     Our calculate coefficients (without margin)<br/>
-    <b>${our_coefficients[0]}</b> vs <b>${our_coefficients[1]}</b>
+    <b>${our_coefficients[0]}</b> vs <b>${our_coefficients[1]}</b></br>
     Mathematical expectation</br>
     Team 1 / Player 1 <b>${m}</b></br>Team 2 / Player 2 <b>${m2}</b>
     `
