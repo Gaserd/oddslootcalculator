@@ -1,51 +1,78 @@
-<html>
-<title>Calculator coefficient</title>
-<meta charset="UTF-8">
-<meta name="description" content="This is a calculator where you can calculate odds based on the bookmaker's margin based on your probabilities.">
-<meta name="keywords" content="odds,betting,tips,profit">
-<meta name="author" content="Edward Beton">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="./normalize.css">
-<link rel="stylesheet" type="text/css" href="./custom.css">
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Coefficient calculator</title>
+    <meta charset="UTF-8">
+    <meta name="description"
+        content="This is a calculator where you can calculate odds based on the bookmaker's margin based on your probabilities.">
+    <meta name="keywords" content="odds,betting,tips,profit">
+    <meta name="author" content="Edward Beton">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
 
 <body>
-    <h1>Calculator coefficient</h1>
-    <p>This is a calculator where you can calculate odds based on the bookmaker's margin based on your probabilities.</br>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Odds</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        You will be able to understand more clearly how profitable it will be for you to place your bid.</p>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="./index.html">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="./calculator.html">Coefficient</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./mathex.html">Mathematical expectation</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./live.html">Live Dota 2</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Calculator coefficient</h1>
+        <p>This is a calculator where you can calculate odds based on the bookmaker's margin based on your
+            probabilities.</br>
+
+            You will be able to understand more clearly how profitable it will be for you to place your bid.</p>
         <p>Let's try!</p>
-    <ul class="menu">
-        <li><a href='./index.html'>Prematch Profit Calculator</a></li>
-        <li><a href='./live.html'>Live Dota 2</a></li>
-        <li><a href='./calculator.html'>Coefficient calculator</a></li>
-        <li><a href='./easygame.html'>Easy game</a></li>
-    </ul>
-    <div class='container'>
-        <p>Team 1 - <span id="team_1"></span></p>
-        <p>Team 2 - <span id="team_2"></span></p>
-        <label>
-            Margin of the bookmaker (<span id="margin_percent">3</span>%)
-            <input type="number" id="margin" value="0.03">
-        </label>
-        <input type="range" id="range" value="50" step="1" name="range" min="0" max="100">
+        <div class='main-table'>
+            <p>Team 1 - <span id="team_1"></span></p>
+            <p>Team 2 - <span id="team_2"></span></p>
+            <label>
+                Margin of the bookmaker (<span id="margin_percent">3</span>%)
+                <input type="number" id="margin" value="0.03">
+            </label>
+            </br>
+            <p>Change percent win teams</p>
+            <input style="width: 80%" type="range" id="range" value="50" step="1" name="range" min="0" max="100">
+        </div>
+        <p>Create <a href='https://twitter.com/edwardbeton'>Edward</a></p>
     </div>
-    <p>Create <a href='https://twitter.com/edwardbeton'>Edward</a></p>
-    <h3>Patch notes</h3>
-    <p>Version 1.0</p>
-    <ul>
-        <li>created</li>
-    </ul>
-    
-</body>
-<script src='./calculator.js'></script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-83599084-11"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
 
-    gtag('config', 'UA-83599084-11');
-</script>
+    <script src='./calculator.js'></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-83599084-11"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-83599084-11');
+    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
 
 </html>

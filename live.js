@@ -41,18 +41,18 @@ function sum_gold(gold) {
 function render_table() {
 
     let data = MATCHES
-    let container = document.querySelector('.container')
+    let container = document.querySelector('.main-table')
     let table = ''
 
-    table += '<table><tbody>'
+    table += '<table class="table"><tbody>'
 
     table += `<thead>
-                <td>ID</td>
-                <td>Tier</td>
-                <td>First Team</td>
-                <td>Second Team</td>
-                <td>Scores</td>
-                <td>Dota Picker</td>
+                <th>ID</th>
+                <th>Tier</th>
+                <th>First Team</th>
+                <th>Second Team</th>
+                <th>Scores</th>
+                <th>Dota Picker</th>
             </thead>`
 
     for (let i = 0; i < data.length; i++) {
@@ -71,7 +71,7 @@ function render_table() {
 }
 
 function delete_table() {
-    let container = document.querySelector('.container')
+    let container = document.querySelector('.main-table')
     container.innerHTML = ''
 }
 

@@ -1,57 +1,77 @@
-<html>
-<title>Oddsloot calculator</title>
-<meta charset="UTF-8">
-<meta name="description" content="It parses data from oddsloot.com and considers where you would put the most profitable.">
-<meta name="keywords" content="odds,betting,tips,profit">
-<meta name="author" content="Edward Beton">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="./normalize.css">
-<link rel="stylesheet" type="text/css" href="./custom.css">
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Oddsloot calculator</title>
+    <meta charset="UTF-8">
+    <meta name="description"
+        content="It parses data from oddsloot.com and considers where you would put the most profitable.">
+    <meta name="keywords" content="odds,betting,tips,profit">
+    <meta name="author" content="Edward Beton">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
 
 <body>
-    <h1>Oddsloot Calculator</h1>
-    <p>Money for betts – $ <input id='money' type='number' value='10'></input></p>
-    <p>This project works very simply.
-        <br />
-        It parses data from oddsloot.com and considers where you would put the most profitable.
-        <br />
-        He thinks based on the fact that the main bet is the first team and it will be $10, then calculates how much you
-        need to put on the 2 bet so that you are in the black.
-        <br />
-        It highlights the best outcomes in gold, where you will be in the black if you win any of the teams.
-        <br />
-        Under each bet written by the bookmaker where it is necessary to put a bet.</p>
-    <ul class="menu">
-        <li><a href='./index.html'>Prematch Profit Calculator</a></li>
-        <li><a href='./live.html'>Live Dota 2</a></li>
-        <li><a href='./calculator.html'>Coefficient calculator</a></li>
-        <li><a href='./easygame.html'>Easy game</a></li>
-    </ul>
-    <div class='container'>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Odds</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="./index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./calculator.html">Coefficient</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./mathex.html">Mathematical expectation</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./live.html">Live Dota 2</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Oddsloot Calculator</h1>
+        <p>Money for betts – $ <input id='money' type='number' value='10'></input></p>
+        <p>This project works very simply.
+            <br />
+            It parses data from oddsloot.com and considers where you would put the most profitable.
+            <br />
+            He thinks based on the fact that the main bet is the first team and it will be $10, then calculates how much
+            you
+            need to put on the 2 bet so that you are in the black.
+            <br />
+            It highlights the best outcomes in gold, where you will be in the black if you win any of the teams.
+            <br />
+            Under each bet written by the bookmaker where it is necessary to put a bet.</p>
+        <div class='main-table'>
+
+        </div>
+        <p>Create <a href='https://twitter.com/edwardbeton'>Edward</a></p>
     </div>
-    <p>Create <a href='https://twitter.com/edwardbeton'>Edward</a></p>
-    <h3>Patch notes</h3>
-    <p>Version 1.0</p>
-    <ul>
-        <li>added table forks</li>
-    </ul>
-    <p>Version 1.1</p>
-    <ul>
-        <li>delete negative forks and delete gold color for positive forks</li>
-        <li>added more powerfull calculations</li>
-        <li>added input for money</li>
-    </ul>
-</body>
-<script src='./script.js'></script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-83599084-11"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
 
-    gtag('config', 'UA-83599084-11');
-</script>
+    <script src='./script.js'></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-83599084-11"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-83599084-11');
+    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
 
 </html>

@@ -141,16 +141,16 @@ function get_all_data() {
 
 function render_table() {
     let data = ODDS
-    let container = document.querySelector('.container')
-    let table = '<table><tbody>'
+    let container = document.querySelector('.main-table')
+    let table = '<table class="table"><tbody>'
 
     table += `<thead>
-                <td>Game</td>
-                <td>First Team</td>
-                <td>First Bet</td>
-                <td>Second Team</td>
-                <td>Second Bet</td>
-                <td>Profit</td>
+                <th scope="col">Game</th>
+                <th scope="col">First Team</th>
+                <th scope="col">First Bet</th>
+                <th scope="col">Second Team</th>
+                <th scope="col">Second Bet</th>
+                <th scope="col">Profit</th>
             </thead>`
 
     for (let i = 0; i < data.length; i++) {
@@ -175,7 +175,7 @@ function render_table() {
 }
 
 function delete_table() {
-    let container = document.querySelector('.container')
+    let container = document.querySelector('.main-table')
     container.innerHTML = ''
 }
 

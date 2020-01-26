@@ -2,10 +2,9 @@
 <html lang="en">
 
 <head>
-    <title>Live Dota 2</title>
+    <title>Mathematical expectation</title>
     <meta charset="UTF-8">
-    <meta name="description"
-        content="It parses OpenAPI Dota2 and check all picks and generate link from dotapicker for you predictions">
+    <meta name="description" content="Mathematical expectation for your predictions">
     <meta name="keywords" content="odds,betting,tips,profit">
     <meta name="author" content="Edward Beton">
     <meta charset="utf-8">
@@ -30,10 +29,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="./calculator.html">Coefficient</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="./mathex.html">Mathematical expectation</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="./live.html">Live Dota 2</a>
                 </li>
             </ul>
@@ -41,16 +40,36 @@
     </nav>
 
     <div class="container">
-        <h1>Live Dota 2</h1>
-        <p>It parses OpenAPI Dota2 and check all picks and generate link from dotapicker for you predictions</p>
-        <div class='main-table'>
+        <h1>Mathematical expectation</h1>
+        <p>Added info and calculate mathematical expectation</p>
+        <p>To calculate the mathematical expectation, enter the coefficients that you see from your bookmaker and set the winning percentages for the team.
 
-        </div>
+            After that, the calculator will calculate the odds that the bookmaker should have based on your winning percentages.
+            
+            It also calculates the mathematical expectation of your bet (as an example, take that you bet $100).
+            
+            The mathematical expectation means the following - how much money you will get if you bet on this bet every time, but if your mathematical expectation is marked with a plus sign, it does not mean that your bet will win.</p>
+
+        <label>
+            Coefficient Team 1 / Player 1
+            <input type="number" id="k1" value="1.9">
+        </label>
+        </br>
+        <label>
+            Coefficient Team 2 / Player 2
+            <input type="number" id="k2" value="1.9">
+        </label>
+        </br>
+        <label>
+            Percent wins <span id="percent1">50%</span> / <span id="percent2">50%</span></br>
+        </label>
+        <input style="width: 80%" type="range" id="range" value="50" step="1" name="range" min="0" max="100">
+
+        <p id="final"></p>
         <p>Create <a href='https://twitter.com/edwardbeton'>Edward</a></p>
     </div>
 
-    <script src='./heroes.js'></script>
-    <script src='./live.js'></script>
+    <script src='./mathex.js'></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-83599084-11"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
