@@ -29,9 +29,9 @@ function render_table(data) {
             <td>${date}</td>
             <td>${data[i].team_1}</td>
             <td>${data[i].team_2}</td>
-            <td>${(typeof data[i].odds.buffbet !== 'undefined') ? `<button data-toggle="modal" data-target="#modalCont" type="button" data-odds="buffbet" data-id=${i} class="btn btn-light odds">${data[i].odds.buffbet[data[i].odds.buffbet.length].odd_1} / ${data[i].odds.buffbet[data[i].odds.buffbet.length].odd_2}</button>` : ''}</th>
-            <td>${(typeof data[i].odds.lootbet !== 'undefined') ? `<button data-toggle="modal" data-target="#modalCont" type="button" data-odds="lootbet" data-id=${i} class="btn btn-light odds">${data[i].odds.lootbet[data[i].odds.lootbet.length].odd_1} / ${data[i].odds.lootbet[data[i].odds.lootbet.length].odd_2}</button>` : ''}</th>
-            <td>${(typeof data[i].odds.unikrn !== 'undefined') ? `<button data-toggle="modal" data-target="#modalCont" type="button" data-odds="unikrn" data-id=${i} class="btn btn-light odds">${data[i].odds.unikrn[data[i].odds.unikrn.length].odd_1} / ${data[i].odds.unikrn[data[i].odds.unikrn.length].odd_2}</button>` : ''}</th>
+            <td>${(typeof data[i].odds.buffbet !== 'undefined') ? `<button data-toggle="modal" data-target="#modalCont" type="button" data-odds="buffbet" data-id=${i} class="btn btn-light odds">${data[i].odds.buffbet[data[i].odds.buffbet.length - 1].odd_1} / ${data[i].odds.buffbet[data[i].odds.buffbet.length - 1].odd_2}</button>` : ''}</th>
+            <td>${(typeof data[i].odds.lootbet !== 'undefined') ? `<button data-toggle="modal" data-target="#modalCont" type="button" data-odds="lootbet" data-id=${i} class="btn btn-light odds">${data[i].odds.lootbet[data[i].odds.lootbet.length - 1].odd_1} / ${data[i].odds.lootbet[data[i].odds.lootbet.length - 1].odd_2}</button>` : ''}</th>
+            <td>${(typeof data[i].odds.unikrn !== 'undefined') ? `<button data-toggle="modal" data-target="#modalCont" type="button" data-odds="unikrn" data-id=${i} class="btn btn-light odds">${data[i].odds.unikrn[data[i].odds.unikrn.length - 1].odd_1} / ${data[i].odds.unikrn[data[i].odds.unikrn.length - 1].odd_2}</button>` : ''}</th>
         </tr>`
     }
 
