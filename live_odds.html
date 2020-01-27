@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-    <title>Live Dota 2</title>
+    <title>Live Odds</title>
     <meta charset="UTF-8">
     <meta name="description"
-        content="It parses OpenAPI Dota2 and check all picks and generate link from dotapicker for you predictions">
+        content="This page is responsible for historical changes in coefficients">
     <meta name="keywords" content="odds,betting,tips,profit">
     <meta name="author" content="Edward Beton">
     <meta charset="utf-8">
@@ -33,10 +33,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="./mathex.html">Mathematical expectation</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="./live.html">Live Dota 2</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="./live_odds.html">Live Odds</a>
                 </li>
             </ul>
@@ -44,16 +44,32 @@
     </nav>
 
     <div class="container">
-        <h1>Live Dota 2</h1>
-        <p>It parses OpenAPI Dota2 and check all picks and generate link from dotapicker for you predictions</p>
+        <h1>Live Odds</h1>
+        <p>This page is responsible for historical changes in coefficients</p>
+        <button id="refresh" type="button" class="btn btn-dark">Refresh</button>
+          
+          <!-- Modal -->
+          <div class="modal fade" id="modalCont" tabindex="-1" role="dialog" aria-labelledby="modalContTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+
         <div class='main-table'>
 
         </div>
         <p>Create <a href='https://twitter.com/edwardbeton'>Edward</a></p>
     </div>
-
-    <script src='./heroes.js'></script>
-    <script src='./live.js'></script>
+    <script src='./live_odds.js'></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-83599084-11"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
