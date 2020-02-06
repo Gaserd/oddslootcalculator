@@ -1,10 +1,10 @@
 let color = require('cli-color')
 
-let player1 = 'Solar'
-let player2 = 'Dream'
+let player1 = 'Mouse'
+let player2 = 'Navi'
 
-let k1 = 1.12
-let k2 = 5.95
+let k1 = 1.6
+let k2 = 2.27
 let marg = (1 - (1 / k1 + 1 / k2)) * -1
 /*
 k - коэффициент выигрыша у букмекера
@@ -12,10 +12,10 @@ marg - рассчитываем маржинальность букмекера
 */
 
 
-let sum_matches = 17
+let sum_matches = 10
 
-let win_matches_player_1 = 13
-let win_matches_player_2 = 4
+let win_matches_player_1 = 9
+let win_matches_player_2 = 7
 let ph1 = 1 / 2
 let ph2 = 1 / 2
 let ph1a = win_matches_player_1 / sum_matches
@@ -85,6 +85,12 @@ console.log(color.black.bgWhite(`
     математическое ожидание в - ${color.blue.bold(m2)}, если ставим на ${color.bold(player2)} при ставке в ${s}
 `))
 
+
+/*
+скриптик для открытия всех счетов https://game-tournaments.com/
+var a = document.querySelectorAll('.mbutton.tresult')
+for (let i = 0; i < 10; i++) { a[i].click() }
+*/
 
 
 
