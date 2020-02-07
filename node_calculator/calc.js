@@ -1,10 +1,10 @@
 let color = require('cli-color')
 
-let player1 = 'Mouse'
-let player2 = 'Navi'
+let player1 = 'Zest'
+let player2 = 'Impact'
 
-let k1 = 1.6
-let k2 = 2.27
+let k1 = 1.49
+let k2 = 2.54
 let marg = (1 - (1 / k1 + 1 / k2)) * -1
 /*
 k - коэффициент выигрыша у букмекера
@@ -12,10 +12,10 @@ marg - рассчитываем маржинальность букмекера
 */
 
 
-let sum_matches = 10
+let sum_matches = 41
 
-let win_matches_player_1 = 9
-let win_matches_player_2 = 7
+let win_matches_player_1 = 19
+let win_matches_player_2 = 22
 let ph1 = 1 / 2
 let ph2 = 1 / 2
 let ph1a = win_matches_player_1 / sum_matches

@@ -23,23 +23,6 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="./index.html">Home</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="./calculator.html">Coefficient</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./mathex.html">Mathematical expectation</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./live.html">Live Dota 2</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./live_odds.html">Live Odds</a>
-                </li>
-            </ul>
         </div>
     </nav>
 
@@ -63,8 +46,19 @@
         </div>
         <p>Create <a href='https://twitter.com/edwardbeton'>Edward</a></p>
     </div>
+    <div class="container" id="donation">
 
-    <script src='./calculator.js'></script>
+    </div>
+
+    <script src='./scripts/donation.js'></script>
+    <script>
+        generate_donation_form()
+    </script>
+    <script src='./scripts/calculator.js'></script>
+    <script src='./scripts/header.js'></script>
+    <script>
+        generate_html_header('Coefficient')
+    </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-83599084-11"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
