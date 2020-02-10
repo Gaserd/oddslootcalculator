@@ -3,7 +3,8 @@ let array_header = [
     { name: 'Coefficient', active: false, page: './calculator.html' },
     { name: 'Mathematical expectation', active: false, page: './mathex.html' },
     { name: 'Live Dota 2', active: false, page: './live.html' },
-    { name: 'Live Odds', active: false, page: './live_odds.html' }
+    { name: 'Live Odds', active: false, page: './live_odds.html' },
+    { name: 'Generate coupon GGBet', active: 'false', page: './ggbetcoupon.html'}
 ]
 
 function generate_html_header(active_header) {
