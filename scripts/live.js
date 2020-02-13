@@ -1,11 +1,5 @@
 
 let MATCHES = []
-let HERO_STATS = []
-
-function get_open_dota_hero_stats() {
-    return fetch('https://api.opendota.com/api/heroStats')
-        .then(res => res.json())
-}
 
 function get_live(id) {
     return new Promise((resolve, reject) => {
@@ -227,16 +221,13 @@ function main() {
         })
 }
 
-get_open_dota_hero_stats()
-    .then(data => {
-        HERO_STATS = data
 
-        main()
 
-        setInterval(function () {
-            main()
-        }, 30000)
-    })
+main()
+
+setInterval(function () {
+    main()
+}, 30000)
 
 
 /*
