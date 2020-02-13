@@ -1,6 +1,12 @@
 
 let MATCHES = []
 
+let HERO_STATS = []
+
+function get_open_dota_hero_stats() {
+    return fetch('https://api.opendota.com/api/heroStats')
+    .then(res => res.json())
+}
 
 function get_live(id) {
     return new Promise((resolve, reject) => {
@@ -11,6 +17,41 @@ function get_live(id) {
             })
             .catch(e => reject([]))
     })
+}
+
+function get_hero_stats(data) {
+
+    let get_hero = (id) => {
+        let data = null
+        for (let i = 0; i < HERO_STATS.length; i++) {
+            if (HERO_STATS[i].id == id) {
+                data = HERO_STATS[i]
+            }
+        }
+        return data
+    }
+
+    let dire_stats = []
+    let radiant_stats = []
+
+    if (data.dire_picks.length == 5 && data.radiant_picks.length == 5) {
+        dire_picks = data.dire_picks
+        radiant_picks = data.radiant_picks
+
+        for (let i = 0; i < dire_picks.length; i++) {
+            dire_stats.push(get_hero(dire_picks[i].hero_id))
+            radiant_stats.push(get_hero(radiant_picks[i].hero_id))
+        }
+
+        return {
+            dire_stats : dire_stats,
+            radiant_stats : radiant_stats
+        }
+
+    } else {
+        return null
+    }
+
 }
 
 function get_matches_live_open_dota() {
@@ -52,6 +93,8 @@ function render_table() {
                 <th>First Team</th>
                 <th>Second Team</th>
                 <th>Scores</th>
+                <th>First Team Pick</th>
+                <th>Second Team Pick</th>
                 <th>Dota Picker</th>
             </thead>`
 
@@ -64,6 +107,8 @@ function render_table() {
         table += `<td>${data[i].dire_score}:${data[i].radiant_score} <br/>
                     <b class='diff_time' data-id='${data[i].match_id}'></b>
                     </td>`
+        table += `<td class='first_team_pick' data-id='${data[i].match_id}'></td>`
+        table += `<td class='second_team_pick' data-id='${data[i].match_id}'></td>`
         table += `<td class='url_dota_picker' data-id='${data[i].match_id}'></td>`
         table += '</tr>'
     }
@@ -130,16 +175,47 @@ function main() {
                     .then(data => {
                         let match_id = MATCHES[i].match_id
                         let url_dota_picker = get_url_dotapicker(data)
+                        let hero_stats = get_hero_stats(data)
+                        console.log(hero_stats)
 
                         document.querySelector('.url_dota_picker[data-id="' + match_id + '"').innerHTML = (url_dota_picker == null) ? null : '<a href=' + url_dota_picker + ' target="blank">CLICK</a>'
                         document.querySelector('.tier[data-id="' + match_id + '"').innerHTML = data.league.tier
+
+                        if (
+                            typeof hero_stats['radiant_stats'] !== 'undefined' &&
+                            typeof hero_stats['dire_stats'] !== 'undefined'
+                        ) {
+                            let first_team_pick = document.querySelector('.first_team_pick[data-id="' + match_id + '"')
+                            let second_team_pick = document.querySelector('.second_team_pick[data-id="' + match_id + '"')
+
+                            let first_team_pick_html = '<ul>'
+                            let second_team_pick_html = '<ul>'
+
+                            for (let i = 0; i < 5; i++) {
+                                first_team_pick_html += '<li>' + hero_stats['dire_stats'][i]['localized_name'] + ' <b>winrate - ' + Math.round((hero_stats['dire_stats'][i]['pro_win'] / hero_stats['dire_stats'][i]['pro_pick']) * 100) + '%</b></li>'
+                                second_team_pick_html += '<li>' + hero_stats['radiant_stats'][i]['localized_name'] + ' <b>winrate - ' + Math.round((hero_stats['radiant_stats'][i]['pro_win'] / hero_stats['radiant_stats'][i]['pro_pick']) * 100) + '%</b></li>'
+                            }
+
+                            first_team_pick_html += '</ul>'
+                            second_team_pick_html += '</ul>'
+
+                            first_team_pick.innerHTML = first_team_pick_html
+                            second_team_pick.innerHTML = second_team_pick_html
+                        }
                     })
             }
         })
 }
 
-main()
-
-setInterval(function () {
+get_open_dota_hero_stats()
+.then(data => {
+    HERO_STATS = data
+    
     main()
-}, 8000)
+
+    /*
+    setInterval(function () {
+        main()
+    }, 8000)
+    */
+})
