@@ -235,7 +235,7 @@ get_open_dota_hero_stats()
 
         setInterval(function () {
             main()
-        }, 8000)
+        }, 30000)
     })
 
 
