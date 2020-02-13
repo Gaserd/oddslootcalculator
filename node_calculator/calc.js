@@ -1,10 +1,10 @@
 let color = require('cli-color')
 
-let player1 = 'Patience'
-let player2 = 'Dynamite'
+let player1 = 'Innovation'
+let player2 = 'Rogue'
 
-let k1 = 1.21
-let k2 = 4.19
+let k1 = 2.15
+let k2 = 1.67
 let marg = (1 - (1 / k1 + 1 / k2)) * -1
 /*
 k - коэффициент выигрыша у букмекера
@@ -12,10 +12,10 @@ marg - рассчитываем маржинальность букмекера
 */
 
 
-let sum_matches = 10
+let sum_matches = 23
 
-let win_matches_player_1 = 5
-let win_matches_player_2 = 4
+let win_matches_player_1 = 14
+let win_matches_player_2 = 9
 let ph1 = 1 / 2
 let ph2 = 1 / 2
 let ph1a = win_matches_player_1 / sum_matches
@@ -90,6 +90,17 @@ console.log(color.black.bgWhite(`
 скриптик для открытия всех счетов https://game-tournaments.com/
 var a = document.querySelectorAll('.mbutton.tresult')
 for (let i = 0; i < 10; i++) { a[i].click() }
+*/
+
+
+/*
+
+cs 28 / 12 - 42
+dota 22 / 9 - 40
+lol 20 / 4 - 20
+sc2 19 / 9 - 47
+r6x 8 / 3 - 37
+
 */
 
 

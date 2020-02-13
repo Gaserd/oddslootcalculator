@@ -56,13 +56,14 @@ function render_table() {
             </thead>`
 
     for (let i = 0; i < data.length; i++) {
-
         table += `<tr>`
         table += `<td>${data[i].match_id}</td>`
         table += `<td class='tier' data-id='${data[i].match_id}'></td>`
         table += `<td>${data[i].team_name_dire} <span class='dire net_gold' data-id='${data[i].match_id}'></span></td>`
         table += `<td>${data[i].team_name_radiant} <span class='radiant net_gold' data-id='${data[i].match_id}'></span></td>`
-        table += `<td>${data[i].dire_score}:${data[i].radiant_score}</td>`
+        table += `<td>${data[i].dire_score}:${data[i].radiant_score} <br/>
+                    <b class='diff_time' data-id='${data[i].match_id}'></b>
+                    </td>`
         table += `<td class='url_dota_picker' data-id='${data[i].match_id}'></td>`
         table += '</tr>'
     }
@@ -91,6 +92,7 @@ function get_url_dotapicker(data) {
         return name
     }
 
+    document.querySelector(`.diff_time[data-id="${data.id}"`).innerHTML = Math.round(data.duration / 60) + ' min'
 
     if (data.dire_picks.length == 5 && data.radiant_picks.length == 5) {
         dire_picks = data.dire_picks
