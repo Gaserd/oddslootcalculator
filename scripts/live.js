@@ -1,11 +1,10 @@
 
 let MATCHES = []
-
 let HERO_STATS = []
 
 function get_open_dota_hero_stats() {
     return fetch('https://api.opendota.com/api/heroStats')
-    .then(res => res.json())
+        .then(res => res.json())
 }
 
 function get_live(id) {
@@ -20,7 +19,6 @@ function get_live(id) {
 }
 
 function get_hero_stats(data) {
-
     let get_hero = (id) => {
         let data = null
         for (let i = 0; i < HERO_STATS.length; i++) {
@@ -44,8 +42,8 @@ function get_hero_stats(data) {
         }
 
         return {
-            dire_stats : dire_stats,
-            radiant_stats : radiant_stats
+            dire_stats: dire_stats,
+            radiant_stats: radiant_stats
         }
 
     } else {
@@ -164,6 +162,16 @@ function get_url_dotapicker(data) {
     }
 }
 
+function search_win_rate_dotabuff(name) {
+    let data = null
+    for (let i = 0; i < DOTABUFF_WIN_RATES_HEROES.length; i++) {
+        if (DOTABUFF_WIN_RATES_HEROES[i].name == name) {
+            data = DOTABUFF_WIN_RATES_HEROES[i]
+        }
+    }
+    return data
+}
+
 function main() {
     delete_table()
     get_matches_live_open_dota()
@@ -176,14 +184,14 @@ function main() {
                         let match_id = MATCHES[i].match_id
                         let url_dota_picker = get_url_dotapicker(data)
                         let hero_stats = get_hero_stats(data)
-                        console.log(hero_stats)
+
+
 
                         document.querySelector('.url_dota_picker[data-id="' + match_id + '"').innerHTML = (url_dota_picker == null) ? null : '<a href=' + url_dota_picker + ' target="blank">CLICK</a>'
                         document.querySelector('.tier[data-id="' + match_id + '"').innerHTML = data.league.tier
 
                         if (
-                            typeof hero_stats['radiant_stats'] !== 'undefined' &&
-                            typeof hero_stats['dire_stats'] !== 'undefined'
+                            hero_stats !== null
                         ) {
                             let first_team_pick = document.querySelector('.first_team_pick[data-id="' + match_id + '"')
                             let second_team_pick = document.querySelector('.second_team_pick[data-id="' + match_id + '"')
@@ -192,8 +200,20 @@ function main() {
                             let second_team_pick_html = '<ul>'
 
                             for (let i = 0; i < 5; i++) {
-                                first_team_pick_html += '<li>' + hero_stats['dire_stats'][i]['localized_name'] + ' <b>winrate - ' + Math.round((hero_stats['dire_stats'][i]['pro_win'] / hero_stats['dire_stats'][i]['pro_pick']) * 100) + '%</b></li>'
-                                second_team_pick_html += '<li>' + hero_stats['radiant_stats'][i]['localized_name'] + ' <b>winrate - ' + Math.round((hero_stats['radiant_stats'][i]['pro_win'] / hero_stats['radiant_stats'][i]['pro_pick']) * 100) + '%</b></li>'
+
+                                let dotabuff_dire_hero = search_win_rate_dotabuff(hero_stats['dire_stats'][i]['localized_name'])
+                                let dotabuff_radiant_hero = search_win_rate_dotabuff(hero_stats['radiant_stats'][i]['localized_name'])
+
+                                first_team_pick_html += `
+                                    <li>
+                                        ${hero_stats['dire_stats'][i]['localized_name']}</br>
+                                        <b>Winrate - ${(dotabuff_dire_hero !== null) ? dotabuff_dire_hero.win : '???'}%</b>
+                                    </li>`
+                                second_team_pick_html += `
+                                    <li>
+                                        ${hero_stats['radiant_stats'][i]['localized_name']}<br/>
+                                        <b>Winrate - ${(dotabuff_radiant_hero !== null) ? dotabuff_radiant_hero.win : '???'}%</b>
+                                    </li>`
                             }
 
                             first_team_pick_html += '</ul>'
@@ -208,14 +228,34 @@ function main() {
 }
 
 get_open_dota_hero_stats()
-.then(data => {
-    HERO_STATS = data
-    
-    main()
+    .then(data => {
+        HERO_STATS = data
 
-    /*
-    setInterval(function () {
         main()
-    }, 8000)
-    */
-})
+
+        setInterval(function () {
+            main()
+        }, 8000)
+    })
+
+
+/*
+
+script get meta heroes dotabuff.com
+
+let table = document.querySelectorAll('.sortable.no-arrows.r-tab-enabled td')
+//12 td, we neeed 2 - name, 11 - %pick, 12 - %winrate
+let length = table.length / 12
+let heroes_array = []
+for (let i = 0; i < length; i++) {
+    let j = i * 12
+    heroes_array.push({
+        name: table[j].getAttribute('data-value'),
+        pick: table[j + 9].getAttribute('data-value'),
+        win: table[j + 10].getAttribute('data-value')
+    })
+}
+
+console.log(JSON.stringify(heroes_array))
+
+*/
