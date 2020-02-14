@@ -200,12 +200,12 @@ function main() {
 
                                 first_team_pick_html += `
                                     <li>
-                                        ${hero_stats['dire_stats'][i]['localized_name']}</br>
+                                        <img class='icon_hero' src="${'https://api.opendota.com' + hero_stats['dire_stats'][i].icon}"> ${hero_stats['dire_stats'][i]['localized_name']}</br>
                                         <b>Winrate - ${(dotabuff_dire_hero !== null) ? dotabuff_dire_hero.win : '???'}%</b>
                                     </li>`
                                 second_team_pick_html += `
                                     <li>
-                                        ${hero_stats['radiant_stats'][i]['localized_name']}<br/>
+                                        <img class='icon_hero' src="${'https://api.opendota.com' + hero_stats['radiant_stats'][i].icon}"> ${hero_stats['radiant_stats'][i]['localized_name']}<br/>
                                         <b>Winrate - ${(dotabuff_radiant_hero !== null) ? dotabuff_radiant_hero.win : '???'}%</b>
                                     </li>`
                             }
