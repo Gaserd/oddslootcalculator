@@ -71,13 +71,19 @@ function sum_gold(gold) {
     return sum
 }
 
+function median(arr) {
+    arr = arr.sort(function (a, b) { return a - b; });
+    var i = arr.length / 2;
+    return i % 1 == 0 ? (arr[i - 1] + arr[i]) / 2 : arr[Math.floor(i)];
+}
+
 function render_table() {
 
     let data = MATCHES
     let container = document.querySelector('.main-table')
     let table = ''
 
-    table += '<table class="table"><tbody>'
+    table += '<table id="table" class="table"><tbody>'
 
     table += `<thead>
                 <th>ID</th>
@@ -167,7 +173,6 @@ function search_win_rate_dotabuff(name) {
 }
 
 function main() {
-    delete_table()
     get_matches_live_open_dota()
         .then(data => {
             render_table()
@@ -193,10 +198,17 @@ function main() {
                             let first_team_pick_html = '<ul>'
                             let second_team_pick_html = '<ul>'
 
+
+                            let average_win_rate_dire = []
+                            let average_win_rate_radiant = []
+
                             for (let i = 0; i < 5; i++) {
 
                                 let dotabuff_dire_hero = search_win_rate_dotabuff(hero_stats['dire_stats'][i]['localized_name'])
                                 let dotabuff_radiant_hero = search_win_rate_dotabuff(hero_stats['radiant_stats'][i]['localized_name'])
+
+                                average_win_rate_dire.push(dotabuff_dire_hero.win)
+                                average_win_rate_radiant.push(dotabuff_radiant_hero.win)
 
                                 first_team_pick_html += `
                                     <li>
@@ -209,6 +221,12 @@ function main() {
                                         <b>Winrate - ${(dotabuff_radiant_hero !== null) ? dotabuff_radiant_hero.win : '???'}%</b>
                                     </li>`
                             }
+
+                            average_win_rate_dire = median(average_win_rate_dire)
+                            average_win_rate_radiant = median(average_win_rate_radiant)
+
+                            first_team_pick_html += `<li class='median_percent'><b>${average_win_rate_dire}%</b></li>`
+                            second_team_pick_html += `<li class='median_percent'><b>${average_win_rate_radiant}%</b></li>`
 
                             first_team_pick_html += '</ul>'
                             second_team_pick_html += '</ul>'
