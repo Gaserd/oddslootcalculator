@@ -230,42 +230,54 @@ function main() {
                             let average_matchups_win_rate_dire = []
                             let average_matchups_win_rate_radiant = []
 
+                            let flag_on_winrate_heroes = document.getElementById('on_winrate').checked
+                            let flag_on_matchups_heroes = document.getElementById('on_matchups').checked
+
                             for (let i = 0; i < 5; i++) {
 
-                                let dotabuff_dire_hero = search_win_rate_dotabuff(hero_stats['dire_stats'][i]['localized_name'])
-                                let dotabuff_radiant_hero = search_win_rate_dotabuff(hero_stats['radiant_stats'][i]['localized_name'])
+                                let dotabuff_dire_hero = (flag_on_winrate_heroes) ? search_win_rate_dotabuff(hero_stats['dire_stats'][i]['localized_name']) : 0
+                                let dotabuff_radiant_hero = (flag_on_winrate_heroes) ? search_win_rate_dotabuff(hero_stats['radiant_stats'][i]['localized_name']) : 0
 
-                                average_win_rate_dire.push(dotabuff_dire_hero.win)
-                                average_win_rate_radiant.push(dotabuff_radiant_hero.win)
+                                if (flag_on_winrate_heroes) {
+                                    average_win_rate_dire.push(dotabuff_dire_hero.win)
+                                    average_win_rate_radiant.push(dotabuff_radiant_hero.win)
+                                }
 
-                                let teammates_dire = get_heroes_matchups(hero_stats['dire_stats'][i])
-                                let teammates_radiant = get_heroes_matchups(hero_stats['radiant_stats'][i])
+                                let teammates_dire = (flag_on_matchups_heroes) ? get_heroes_matchups(hero_stats['dire_stats'][i]) : 0
+                                let teammates_radiant = (flag_on_matchups_heroes) ? get_heroes_matchups(hero_stats['radiant_stats'][i]) : 0
 
-                                let hero_matchups_dire = get_median_percent_winrate_teammates(
+                                let hero_matchups_dire = (flag_on_matchups_heroes) ? get_median_percent_winrate_teammates(
                                     teammates_dire.matchups.teammates,
                                     hero_stats['radiant_stats']
-                                )
+                                ) : 0
 
-                                let hero_matchups_radiant = get_median_percent_winrate_teammates(
+                                let hero_matchups_radiant = (flag_on_matchups_heroes) ? get_median_percent_winrate_teammates(
                                     teammates_radiant.matchups.teammates,
                                     hero_stats['dire_stats']
-                                )
+                                ) : 0
 
-                                average_matchups_win_rate_dire.push(hero_matchups_dire)
-                                average_matchups_win_rate_radiant.push(hero_matchups_radiant)
+                                if (flag_on_matchups_heroes) {
+                                    average_matchups_win_rate_dire.push(hero_matchups_dire)
+                                    average_matchups_win_rate_radiant.push(hero_matchups_radiant)
+                                }
 
                                 first_team_pick_html += `
                                     <li>
                                         <img class='icon_hero' src="${'https://api.opendota.com' + hero_stats['dire_stats'][i].icon}"> ${hero_stats['dire_stats'][i]['localized_name']}</br>
-                                        <b>Winrate - ${(dotabuff_dire_hero !== null) ? dotabuff_dire_hero.win : '???'}%</b></br>
-                                        <b>Matchups - ${hero_matchups_dire}%</b>
-                                    </li>`
+                                    `
+                                first_team_pick_html += (flag_on_winrate_heroes) ? `<b>Winrate - ${(dotabuff_dire_hero !== null) ? dotabuff_dire_hero.win : '???'}%</b></br>` : ''
+                                first_team_pick_html += (flag_on_matchups_heroes) ? `<b>Matchups - ${hero_matchups_radiant}%</b>` : ''
+                                first_team_pick_html += '</li>'
+
+
                                 second_team_pick_html += `
                                     <li>
                                         <img class='icon_hero' src="${'https://api.opendota.com' + hero_stats['radiant_stats'][i].icon}"> ${hero_stats['radiant_stats'][i]['localized_name']}<br/>
-                                        <b>Winrate - ${(dotabuff_radiant_hero !== null) ? dotabuff_radiant_hero.win : '???'}%</b></br>
-                                        <b>Matchups - ${hero_matchups_radiant}%</b>
-                                    </li>`
+                                `
+                                second_team_pick_html += (flag_on_winrate_heroes) ? `<b>Winrate - ${(dotabuff_radiant_hero !== null) ? dotabuff_radiant_hero.win : '???'}%</b></br>` : ''
+                                second_team_pick_html += (flag_on_matchups_heroes) ? `<b>Matchups - ${hero_matchups_radiant}%</b>` : ''
+                                second_team_pick_html += `</li>`
+
                             }
 
                             average_win_rate_dire = median(average_win_rate_dire)
@@ -276,14 +288,14 @@ function main() {
                             first_team_pick_html += `
                                 <li class='median_percent'>
                                     Median</br>
-                                    <b>${average_win_rate_dire}%</b></br>
-                                    <b>${average_matchups_win_rate_dire}%</b>
+                                    <b>${(flag_on_winrate_heroes) ? average_win_rate_dire : 0}%</b></br>
+                                    <b>${(flag_on_matchups_heroes) ? average_matchups_win_rate_dire : 0}%</b>
                                 </li>`
                             second_team_pick_html += `
                                 <li class='median_percent'>
                                     Median</br>
-                                    <b>${average_win_rate_radiant}%</b></br>
-                                    <b>${average_matchups_win_rate_radiant}%</b>
+                                    <b>${(flag_on_winrate_heroes) ? average_win_rate_radiant : 0}%</b></br>
+                                    <b>${(flag_on_matchups_heroes) ? average_matchups_win_rate_radiant : 0}%</b>
                                 </li>`
 
                             first_team_pick_html += '</ul>'
@@ -305,6 +317,13 @@ setInterval(function () {
     main()
 }, 30000)
 
+document.getElementById('on_winrate').onchange = function() {
+    main()
+}
+
+document.getElementById('on_matchups').onchange = function() {
+    main()
+}
 
 /*
 
