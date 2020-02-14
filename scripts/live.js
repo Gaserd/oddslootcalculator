@@ -12,6 +12,32 @@ function get_live(id) {
     })
 }
 
+function get_heroes_matchups(data) {
+    let matchups = null
+    for (let i = 0; i < HEROES_MATCHUPS.length; i++) {
+        if (HEROES_MATCHUPS[i].id == data.id) {
+            matchups = HEROES_MATCHUPS[i]
+        }
+    }
+    return matchups
+}
+
+function get_median_percent_winrate_teammates(teammates_stats, teammates) {
+    let percent_win = []
+    if (teammates.length > 0) {
+        for (let i = 0; i < teammates_stats.length; i++) {
+            for (let j = 0; j < teammates.length; j++) {
+                if (teammates_stats[i].name == teammates[j].localized_name) {
+                    percent_win.push(teammates_stats[i].win_rate)
+                }
+            }
+        }
+        return median(percent_win)
+    } else {
+        return 0
+    }
+}
+
 function get_hero_stats(data) {
     let get_hero = (id) => {
         let data = null
@@ -201,6 +227,8 @@ function main() {
 
                             let average_win_rate_dire = []
                             let average_win_rate_radiant = []
+                            let average_matchups_win_rate_dire = []
+                            let average_matchups_win_rate_radiant = []
 
                             for (let i = 0; i < 5; i++) {
 
@@ -210,23 +238,53 @@ function main() {
                                 average_win_rate_dire.push(dotabuff_dire_hero.win)
                                 average_win_rate_radiant.push(dotabuff_radiant_hero.win)
 
+                                let teammates_dire = get_heroes_matchups(hero_stats['dire_stats'][i])
+                                let teammates_radiant = get_heroes_matchups(hero_stats['radiant_stats'][i])
+
+                                let hero_matchups_dire = get_median_percent_winrate_teammates(
+                                    teammates_dire.matchups.teammates,
+                                    hero_stats['radiant_stats']
+                                )
+
+                                let hero_matchups_radiant = get_median_percent_winrate_teammates(
+                                    teammates_radiant.matchups.teammates,
+                                    hero_stats['dire_stats']
+                                )
+
+                                average_matchups_win_rate_dire.push(hero_matchups_dire)
+                                average_matchups_win_rate_radiant.push(hero_matchups_radiant)
+
                                 first_team_pick_html += `
                                     <li>
                                         <img class='icon_hero' src="${'https://api.opendota.com' + hero_stats['dire_stats'][i].icon}"> ${hero_stats['dire_stats'][i]['localized_name']}</br>
-                                        <b>Winrate - ${(dotabuff_dire_hero !== null) ? dotabuff_dire_hero.win : '???'}%</b>
+                                        <b>Winrate - ${(dotabuff_dire_hero !== null) ? dotabuff_dire_hero.win : '???'}%</b></br>
+                                        <b>Matchups - ${hero_matchups_dire}%</b>
                                     </li>`
                                 second_team_pick_html += `
                                     <li>
                                         <img class='icon_hero' src="${'https://api.opendota.com' + hero_stats['radiant_stats'][i].icon}"> ${hero_stats['radiant_stats'][i]['localized_name']}<br/>
-                                        <b>Winrate - ${(dotabuff_radiant_hero !== null) ? dotabuff_radiant_hero.win : '???'}%</b>
+                                        <b>Winrate - ${(dotabuff_radiant_hero !== null) ? dotabuff_radiant_hero.win : '???'}%</b></br>
+                                        <b>Matchups - ${hero_matchups_radiant}%</b>
                                     </li>`
                             }
 
                             average_win_rate_dire = median(average_win_rate_dire)
                             average_win_rate_radiant = median(average_win_rate_radiant)
+                            average_matchups_win_rate_dire = median(average_matchups_win_rate_dire)
+                            average_matchups_win_rate_radiant = median(average_matchups_win_rate_radiant)
 
-                            first_team_pick_html += `<li class='median_percent'><b>${average_win_rate_dire}%</b></li>`
-                            second_team_pick_html += `<li class='median_percent'><b>${average_win_rate_radiant}%</b></li>`
+                            first_team_pick_html += `
+                                <li class='median_percent'>
+                                    Median</br>
+                                    <b>${average_win_rate_dire}%</b></br>
+                                    <b>${average_matchups_win_rate_dire}%</b>
+                                </li>`
+                            second_team_pick_html += `
+                                <li class='median_percent'>
+                                    Median</br>
+                                    <b>${average_win_rate_radiant}%</b></br>
+                                    <b>${average_matchups_win_rate_radiant}%</b>
+                                </li>`
 
                             first_team_pick_html += '</ul>'
                             second_team_pick_html += '</ul>'
