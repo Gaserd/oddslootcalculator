@@ -198,6 +198,40 @@ function search_win_rate_dotabuff(name) {
     return data
 }
 
+/*function from heroes_datdota*/
+function get_index_heroes(name, array_names) {
+    let index = -1
+    for (let i = 0; i < array_names.length; i++) {
+        if (array_names[i] == name) {
+            index = i
+            break
+        }
+    }
+    return index
+}
+
+/*function from heroes_datdota*/
+function get_numbers_power(index_hero, index_enemy_hero) {
+    return HEROES_DATDOTA.numbers[index_hero + 1][index_enemy_hero + 1]
+}
+
+/*function from heroes_datdota*/
+function sum_numbers(sum, a) {
+    if (typeof a !== 'undefined') {
+        a = a.replace(',', '.')
+        if (a.indexOf('+') !== -1) {
+            a = a.replace('+', '')
+            a = Number(a)
+            sum = sum + a
+        } else if (a.indexOf('-') !== -1) {
+            a = a.replace('-', '')
+            a = Number(a)
+            sum = sum - a
+        }
+    }
+    return sum
+}
+
 function main() {
     get_matches_live_open_dota()
         .then(data => {
@@ -232,6 +266,45 @@ function main() {
 
                             let flag_on_winrate_heroes = document.getElementById('on_winrate').checked
                             let flag_on_matchups_heroes = document.getElementById('on_matchups').checked
+
+                            let sum_power_dire = 0
+                            let sum_power_radiant = 0
+
+
+                            for (let i = 0; i < hero_stats.dire_stats.length; i++) {
+                                hero_stats.dire_stats[i].index = get_index_heroes(hero_stats.dire_stats[i].localized_name, HEROES_DATDOTA.names)
+                                hero_stats.radiant_stats[i].index = get_index_heroes(hero_stats.radiant_stats[i].localized_name, HEROES_DATDOTA.names)
+                            }
+
+                            for (let i = 0; i < hero_stats.dire_stats.length; i++) {
+                                let power = 0
+                                for (let j = 0; j < hero_stats.radiant_stats.length; j++) {
+                                    power = sum_numbers(
+                                        power,
+                                        get_numbers_power(
+                                            hero_stats.dire_stats[i].index,
+                                            hero_stats.radiant_stats[j].index
+                                        )
+                                    )
+                                }
+                                hero_stats.dire_stats[i].power = power
+                                sum_power_dire = sum_power_dire + power
+                            }
+
+                            for (let i = 0; i < hero_stats.radiant_stats.length; i++) {
+                                let power = 0
+                                for (let j = 0; j < hero_stats.dire_stats.length; j++) {
+                                    power = sum_numbers(
+                                        power,
+                                        get_numbers_power(
+                                            hero_stats.radiant_stats[i].index,
+                                            hero_stats.dire_stats[j].index
+                                        )
+                                    )
+                                }
+                                hero_stats.radiant_stats[i].power = power
+                                sum_power_radiant = sum_power_radiant + power
+                            }
 
                             for (let i = 0; i < 5; i++) {
 
@@ -289,13 +362,15 @@ function main() {
                                 <li class='median_percent'>
                                     Median</br>
                                     <b>${(flag_on_winrate_heroes) ? average_win_rate_dire : 0}%</b></br>
-                                    <b>${(flag_on_matchups_heroes) ? average_matchups_win_rate_dire : 0}%</b>
+                                    <b>${(flag_on_matchups_heroes) ? average_matchups_win_rate_dire : 0}%</b></br>
+                                    <b>${sum_power_dire}</b>
                                 </li>`
                             second_team_pick_html += `
                                 <li class='median_percent'>
                                     Median</br>
                                     <b>${(flag_on_winrate_heroes) ? average_win_rate_radiant : 0}%</b></br>
-                                    <b>${(flag_on_matchups_heroes) ? average_matchups_win_rate_radiant : 0}%</b>
+                                    <b>${(flag_on_matchups_heroes) ? average_matchups_win_rate_radiant : 0}%</b></br>
+                                    <b>${sum_power_radiant}</b>
                                 </li>`
 
                             first_team_pick_html += '</ul>'
@@ -317,11 +392,11 @@ setInterval(function () {
     main()
 }, 30000)
 
-document.getElementById('on_winrate').onchange = function() {
+document.getElementById('on_winrate').onchange = function () {
     main()
 }
 
-document.getElementById('on_matchups').onchange = function() {
+document.getElementById('on_matchups').onchange = function () {
     main()
 }
 
@@ -343,5 +418,21 @@ for (let i = 0; i < length; i++) {
 }
 
 console.log(JSON.stringify(heroes_array))
+
+*/
+
+/*
+
+let j = 0
+numbersArrat[j] = []
+for (let i = 0; i < numbers.length; i++) {
+    if (i % 42 == 0) {
+        j++
+        numbersArrat[j] = []
+        numbersArrat[j].push(numbers[i].innerText)
+    } else {
+        numbersArrat[j].push(numbers[i].innerText)
+    }
+}
 
 */
