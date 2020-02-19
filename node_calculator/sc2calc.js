@@ -11,13 +11,28 @@ let object = []
 let j = 0
 let names = document.querySelectorAll('.__app-LogoTitle-name.LogoTitle__name___2LTlu')
 let odds = document.querySelectorAll('.odd__ellipsis___3b4Yk')
+let date_time = document.querySelectorAll('.dateTime__date___147AU')
+
+function get_day(text) {
+    if (text.indexOf('TODAY') !== -1) {
+        let day = new Date()
+        day = day.toLocaleDateString('en-EN', { month : 'short', day : 'numeric' })
+        day = day.toUpperCase()
+        return text.replace('TODAY', day)
+    } else {
+        return text
+    }
+}
+
 for (let i = 0; i < names.length; i++) {
-    if (i % 2 == 0) {
+    if (i == 0) 
+        object[j] = []
+    if (i % 2 == 0 && i != 0 ) {
         j++
         object[j] = []
-        object[j].push({ name : names[i].innerText, odds : odds[i].innerText })
+        object[j].push({ time : get_day(date_time[j].innerText),  name : names[i].innerText, odds : odds[i].innerText })
     } else {
-        object[j].push({ name : names[i].innerText, odds : odds[i].innerText })
+        object[j].push({ time : get_day(date_time[j].innerText), name : names[i].innerText, odds : odds[i].innerText })
     }
 }
 console.log(JSON.stringify(object))
@@ -54,6 +69,7 @@ async function main() {
 
     let table = '<table>'
     table += '<thead>'
+    table += '<th>Time</th>'
     table += '<th>Player 1</th>'
     table += '<th>Player 2</th>'
     table += '<th>Player 1 ggbet odds</th>'
@@ -76,7 +92,6 @@ async function main() {
             custom_odds.probb
         ]
 
-
         sc2line[i][0].id = player_1.id
         sc2line[i][0].race = player_1.race
         sc2line[i][1].id = player_2.id
@@ -96,6 +111,7 @@ async function main() {
         sc2line[i][1].value = format_number(sc2line[i][1].odds * (1 / sc2line[i][1].custom_odds))
 
         table += '<tr>'
+        table += `<td>${sc2line[i][0].time}</td>`
         table += `<td>${sc2line[i][0].name}</td>`
         table += `<td>${sc2line[i][1].name}</td>`
         table += `<td>${sc2line[i][0].odds}</td>`
