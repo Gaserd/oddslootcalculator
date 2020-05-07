@@ -10,6 +10,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-83599084-12"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-83599084-12');
+    </script>
+
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -185,7 +195,7 @@
 
             let likeFlag = 0
             const like = document.querySelector('.like')
-            like.addEventListener('click', function() {
+            like.addEventListener('click', function () {
                 if (likeFlag == 0) {
                     like.classList.add('active')
                     likeFlag = 1
