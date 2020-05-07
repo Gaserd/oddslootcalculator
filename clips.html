@@ -73,6 +73,33 @@
             z-index: 99999;
             color: #fff;
         }
+
+        .like {
+            position: absolute;
+            bottom: 80px;
+            right: 8px;
+            z-index: 99999;
+            padding: 5px 7px;
+            text-align: center;
+            border-radius: 50px;
+            background-color: #fff;
+        }
+
+        .like.active {
+            background-color: blueviolet;
+        }
+
+        .share {
+            position: absolute;
+            bottom: 80px;
+            right: 48px;
+            z-index: 99999;
+            padding: 5px 7px;
+            text-align: center;
+            border-radius: 50px;
+            background-color: #fff;
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -151,8 +178,22 @@
                     <source src='https://clips-media-assets2.twitch.tv/AT-cm%7C${clip.tracking_id}.mp4' type="video/mp4">
                 </video>
                 <a target='_blank' class='link_broadcaster' href='${clip.broadcaster.channel_url}'>${clip.broadcaster.display_name}</a>
+                <a target='_blank' href="https://twitter.com/intent/tweet?text=Share with https://gaserd.github.io/oddslootcalculator/clips.html , I like this clip ${clip.url}" class='share'>📢</a>
+                <div class='like'>❤️</div>
             </div>
             `
+
+            let likeFlag = 0
+            const like = document.querySelector('.like')
+            like.addEventListener('click', function() {
+                if (likeFlag == 0) {
+                    like.classList.add('active')
+                    likeFlag = 1
+                } else {
+                    like.classList.remove('active')
+                    likeFlag = 0
+                }
+            })
         }, 1000)
 
         let height = window.innerHeight
