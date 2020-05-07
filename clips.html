@@ -139,7 +139,15 @@
         setTimeout(function () {
             container.innerHTML = `
             <div class='video_container'>
-                <video width='100%' height='${height}' controls>
+                <video 
+                    width='100%' 
+                    height='${height}' 
+                    autoplay
+                    loop
+                    playsinline
+                    allowfullscreen='false'
+                    controls
+                >
                     <source src='https://clips-media-assets2.twitch.tv/AT-cm%7C${clip.tracking_id}.mp4' type="video/mp4">
                 </video>
                 <a target='_blank' class='link_broadcaster' href='${clip.broadcaster.channel_url}'>${clip.broadcaster.display_name}</a>
