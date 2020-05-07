@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Highlights & Best Moments in the game</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Highlights & Best Moments in the game">
+    <meta name="keywords" content="highlights,moments,games">
+    <meta name="author" content="Edward Beton">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 0;
+            margin: 0;
+            background-color: black;
+        }
+
+        .main {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .mainBlockClips {
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 5px;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            white-space: nowrap;
+            z-index: 9000;
+        }
+
+        .listGames {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .listGames li {
+            display: inline-block;
+            vertical-align: top;
+            background-color: darkgray;
+            color: white;
+            font-weight: bolder;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .listGames li.active {
+            background-color: blueviolet;
+        }
+
+        .video_container {
+            position: relative;
+            height: 100vh;
+        }
+
+        .link_broadcaster {
+            position: absolute;
+            top: 60px;
+            left: 8px;
+            z-index: 99999;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <header>
+            <ul class="listGames">
+                <li class="game active" data-game='League of Legends'>LoL</li>
+                <li class="game" data-game='Counter-Strike: Global Offensive'>CS:GO</li>
+                <li class="game" data-game='Valorant'>Valorant</li>
+                <li class="game" data-game='Dota 2'>Dota 2</li>
+                <li class="game" data-game='Fortnite'>Fortnite</li>
+                <li class="game" data-game='Minecraft'>Minecraft</li>
+            </ul>
+        </header>
+        <div class="mainBlockClips">
+
+        </div>
+    </div>
+</body>
+<script>
+    /*
+        CS:GO - 32399
+        LoL - 21779
+        Dota 2 - 29595
+        Valorant - 516575
+        Fortnite - 33214
+        Minecraft - 27471
+    */
+
+    let clips = []
+    let targetGame = 'League of Legends'
+    let targetClipsIndex = 0
+
+    function getGames() {
+        return fetch(`https://api.twitch.tv/kraken/search/games?query=Minecraft`, {
+            headers: {
+                'Accept': 'application/vnd.twitchtv.v5+json',
+                'Client-ID': 'ghotej777m8rk7kmsp5yp4oo9t3fjg'
+            }
+        })
+            .then(res => res.json())
+            .then(data => data)
+            .catch(e => [])
+    }
+
+    function getClips() {
+        return fetch(`https://api.twitch.tv/kraken/clips/top?game=${targetGame}&period=month&trending=true&limit=50`, {
+            headers: {
+                'Accept': 'application/vnd.twitchtv.v5+json',
+                'Client-ID': 'ghotej777m8rk7kmsp5yp4oo9t3fjg'
+            }
+        })
+            .then(res => res.json())
+            .then(data => data)
+            .catch(e => [])
+    }
+
+    function drawClip() {
+        const container = document.querySelector('.mainBlockClips')
+        container.innerHTML = ''
+        const clip = clips[targetClipsIndex]
+
+        setTimeout(function () {
+            container.innerHTML = `
+            <div class='video_container'>
+                <video width='100%' height='${height}' controls>
+                    <source src='https://clips-media-assets2.twitch.tv/AT-cm%7C${clip.tracking_id}.mp4' type="video/mp4">
+                </video>
+                <a target='_blank' class='link_broadcaster' href='${clip.broadcaster.channel_url}'>${clip.broadcaster.display_name}</a>
+            </div>
+            `
+        }, 1000)
+
+        let height = window.innerHeight
+
+    }
+
+    function clearGameClass() {
+        const game = document.querySelectorAll('.game')
+        for (let i = 0; i < game.length; i++) {
+            game[i].classList.remove('active')
+        }
+    }
+
+    getClips()
+        .then(data => {
+            clips = data.clips
+            console.log(clips)
+            drawClip()
+        })
+
+    const element = document.querySelector('.mainBlockClips')
+    const mc = new Hammer(element)
+    mc.get('swipe').set({
+        direction: Hammer.DIRECTION_ALL,
+        threshold: 1,
+        velocity: 0.1
+    });
+
+    mc.on("swipeup", function (ev) {
+        console.log('up')
+        targetClipsIndex++
+        if (targetClipsIndex > clips.length) {
+            targetClipsIndex = clips.length - 1
+        } else {
+            drawClip()
+        }
+    });
+
+    mc.on("swipedown", function (ev) {
+        console.log('down')
+        targetClipsIndex--
+        if (targetClipsIndex == -1) {
+            targetClipsIndex = 0
+        } else {
+            drawClip()
+        }
+    });
+
+    const game = document.querySelectorAll('.game')
+    for (let i = 0; i < game.length; i++) {
+        game[i].addEventListener('click', function () {
+            clearGameClass()
+            targetGame = game[i].getAttribute('data-game')
+            game[i].classList.add('active')
+            getClips()
+                .then(data => {
+                    clips = data.clips
+                    console.log(clips)
+                    drawClip()
+                })
+        })
+    }
+
+</script>
+
+</html>

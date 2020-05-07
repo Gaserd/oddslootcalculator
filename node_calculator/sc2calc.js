@@ -1,48 +1,5 @@
-/*
-
-how create sc2.json ?
-
-- open gg22bet.ru
-- open SC2
-- open developer page
-- paste in console this code
-
-let object = []
-let j = 0
-let names = document.querySelectorAll('.__app-LogoTitle-name.LogoTitle__name___2LTlu')
-let odds = document.querySelectorAll('.odd__ellipsis___3b4Yk')
-let date_time = document.querySelectorAll('.dateTime__date___147AU')
-
-function get_day(text) {
-    if (text.indexOf('TODAY') !== -1) {
-        let day = new Date()
-        day = day.toLocaleDateString('en-EN', { month : 'short', day : 'numeric' })
-        day = day.toUpperCase()
-        return text.replace('TODAY', day)
-    } else {
-        return text
-    }
-}
-
-for (let i = 0; i < names.length; i++) {
-    if (i == 0) 
-        object[j] = []
-    if (i % 2 == 0 && i != 0 ) {
-        j++
-        object[j] = []
-        object[j].push({ time : get_day(date_time[j].innerText),  name : names[i].innerText, odds : odds[i].innerText })
-    } else {
-        object[j].push({ time : get_day(date_time[j].innerText), name : names[i].innerText, odds : odds[i].innerText })
-    }
-}
-console.log(JSON.stringify(object))
-
-- copy string in sc2.json
-
-*/
-
 const fs = require('fs')
-const sc2line = JSON.parse(fs.readFileSync('./sc2.json', 'utf-8'))
+const sc2 = require('./sc2getinfobk')
 const aligulac_api_key = '996TfcqdZrgcVpNJg0gK'
 const node_fetch = require('node-fetch')
 
@@ -66,6 +23,8 @@ function format_number(num) {
 }
 
 async function main() {
+
+    let sc2line = await sc2.get_strcraft2_matches_with_odds()
 
     let table = '<table>'
     table += '<thead>'
