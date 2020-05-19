@@ -8,7 +8,8 @@
     <meta name="keywords" content="highlights,moments,games">
     <meta name="author" content="Gaserd">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover">
     <script src="https://hammerjs.github.io/dist/hammer.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-83599084-12"></script>
@@ -189,16 +190,18 @@
             `
 
             const like = document.querySelector('.share')
-            like.addEventListener('click', function() {
-                vkBridge.send("VKWebAppShowStoryBox", 
-                { 
-                    "background_type" : "video", 
-                    "url" : `https://clips-media-assets2.twitch.tv/AT-cm%7C${clip.tracking_id}.mp4`,
-                    "action" : {
-                        "action_app" : 7375876
-                    }
-                    
-                });
+            like.addEventListener('click', function () {
+                vkBridge.send("VKWebAppShowStoryBox",
+                    {
+                        "background_type": "video",
+                        "url": `https://clips-media-assets2.twitch.tv/AT-cm%7C${clip.tracking_id}.mp4`,
+                        "attachment": {
+                            "text": "open", // см. значения link_text в https://vk.com/dev/stories.getVideoUploadServer
+                            "type": "url",
+                            "url": "https://vk.com/app7375876"
+                        }
+
+                    });
             })
 
         }, 1000)
