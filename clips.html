@@ -190,7 +190,15 @@
 
             const like = document.querySelector('.share')
             like.addEventListener('click', function() {
-                vkBridge.send("VKWebAppShowStoryBox", { "background_type" : "video", "url" : `https://clips-media-assets2.twitch.tv/AT-cm%7C${clip.tracking_id}.mp4` });
+                vkBridge.send("VKWebAppShowStoryBox", 
+                { 
+                    "background_type" : "video", 
+                    "url" : `https://clips-media-assets2.twitch.tv/AT-cm%7C${clip.tracking_id}.mp4`,
+                    "action" : {
+                        "action_app" : 7375876
+                    }
+                    
+                });
             })
 
         }, 1000)
