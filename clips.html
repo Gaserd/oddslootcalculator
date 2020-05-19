@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="description" content="Highlights & Best Moments in the game">
     <meta name="keywords" content="highlights,moments,games">
-    <meta name="author" content="Edward Beton">
+    <meta name="author" content="Gaserd">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://hammerjs.github.io/dist/hammer.js"></script>
@@ -19,7 +19,7 @@
 
         gtag('config', 'UA-83599084-12');
     </script>
-
+    <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -84,30 +84,19 @@
             color: #fff;
         }
 
-        .like {
-            position: absolute;
-            bottom: 80px;
-            right: 8px;
-            z-index: 99999;
-            padding: 5px 7px;
-            text-align: center;
-            border-radius: 50px;
-            background-color: #fff;
-        }
-
-        .like.active {
-            background-color: blueviolet;
-        }
-
         .share {
             position: absolute;
             bottom: 80px;
-            right: 48px;
+            right: 16px;
             z-index: 99999;
             padding: 5px 7px;
             text-align: center;
-            border-radius: 50px;
-            background-color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            border: none;
+            color: #fff;
+            background-color: blueviolet;
             text-decoration: none;
         }
     </style>
@@ -117,8 +106,8 @@
     <div class="main">
         <header>
             <ul class="listGames">
-                <li class="game active" data-game='League of Legends'>LoL</li>
-                <li class="game" data-game='Counter-Strike: Global Offensive'>CS:GO</li>
+                <li class="game active" data-game='Counter-Strike: Global Offensive'>CS:GO</li>
+                <li class="game" data-game='League of Legends'>LoL</li>
                 <li class="game" data-game='Valorant'>Valorant</li>
                 <li class="game" data-game='Dota 2'>Dota 2</li>
                 <li class="game" data-game='Fortnite'>Fortnite</li>
@@ -140,8 +129,10 @@
         Minecraft - 27471
     */
 
+    vkBridge.send('VKWebAppInit');
+
     let clips = []
-    let targetGame = 'League of Legends'
+    let targetGame = 'Counter-Strike: Global Offensive'
     let targetClipsIndex = 0
 
     function getGames() {
@@ -157,7 +148,7 @@
     }
 
     function getClips() {
-        return fetch(`https://api.twitch.tv/kraken/clips/top?game=${targetGame}&period=month&trending=true&limit=50`, {
+        return fetch(`https://api.twitch.tv/kraken/clips/top?game=${targetGame}&period=month&trending=true&limit=100&language=ru`, {
             headers: {
                 'Accept': 'application/vnd.twitchtv.v5+json',
                 'Client-ID': 'ghotej777m8rk7kmsp5yp4oo9t3fjg'
@@ -172,6 +163,7 @@
         const container = document.querySelector('.mainBlockClips')
         container.innerHTML = ''
         const clip = clips[targetClipsIndex]
+        const height = window.innerHeight
 
         setTimeout(function () {
             container.innerHTML = `
@@ -184,29 +176,23 @@
                     playsinline
                     allowfullscreen='false'
                     controls
+
                 >
                     <source src='https://clips-media-assets2.twitch.tv/AT-cm%7C${clip.tracking_id}.mp4' type="video/mp4">
                 </video>
                 <a target='_blank' class='link_broadcaster' href='${clip.broadcaster.channel_url}'>${clip.broadcaster.display_name}</a>
-                <a target='_blank' href="https://twitter.com/intent/tweet?text=Share with https://gaserd.github.io/oddslootcalculator/clips.html , I like this clip ${clip.url}" class='share'>📢</a>
-                <div class='like'>❤️</div>
+                <button class='share'>
+                    зашарить
+                </button>
             </div>
             `
 
-            let likeFlag = 0
-            const like = document.querySelector('.like')
-            like.addEventListener('click', function () {
-                if (likeFlag == 0) {
-                    like.classList.add('active')
-                    likeFlag = 1
-                } else {
-                    like.classList.remove('active')
-                    likeFlag = 0
-                }
+            const like = document.querySelector('.share')
+            like.addEventListener('click', function() {
+                vkBridge.send("VKWebAppShowStoryBox", { "background_type" : "video", "url" : `https://clips-media-assets2.twitch.tv/AT-cm%7C${clip.tracking_id}.mp4` });
             })
-        }, 1000)
 
-        let height = window.innerHeight
+        }, 1000)
 
     }
 
@@ -233,7 +219,6 @@
     });
 
     mc.on("swipeup", function (ev) {
-        console.log('up')
         targetClipsIndex++
         if (targetClipsIndex > clips.length) {
             targetClipsIndex = clips.length - 1
