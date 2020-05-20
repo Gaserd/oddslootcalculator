@@ -76,14 +76,51 @@
         .video_container {
             position: relative;
             height: 100vh;
+            animation: opacitySwitch 1s ease-in-out;
+        }
+
+        .video_container.animation {
+            animation: opacitySwitchReverse 1s ease-in-out;
+        }
+
+        @keyframes opacitySwitchReverse {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes opacitySwitch {
+            0% {
+                opacity: 0.7;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .broadcaster {
+            position: absolute;
+            bottom: 80px;
+            left: 8px;
+            z-index: 99999;
+        }
+
+        .broadcaster img {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: inline-block;
+            vertical-align: top;
         }
 
         .link_broadcaster {
-            position: absolute;
-            top: 110px;
-            left: 8px;
-            z-index: 99999;
+            margin-top:2px;
             color: #fff;
+            display: inline-block;
+            vertical-align: top;
         }
 
         .share {
@@ -163,7 +200,15 @@
 
     function drawClip() {
         const container = document.querySelector('.mainBlockClips')
-        container.innerHTML = ''
+        const videoContainer = document.querySelector('.video_container')
+        if (videoContainer !== null) {
+            videoContainer.classList.add('animation')
+            setTimeout(function() {
+                container.innerHTML = ''
+            }, 1000)
+        } else {
+            container.innerHTML = ''
+        }
         const clip = clips[targetClipsIndex]
         const height = window.innerHeight
 
@@ -172,22 +217,35 @@
             <div class='video_container'>
                 <video 
                     width='100%' 
-                    height='${height}' 
-                    autoplay
+                    height='${height}'
                     loop
                     playsinline
-                    allowfullscreen='false'
-                    controls
-
+                    allowfullscreen=false
                 >
                     <source src='https://clips-media-assets2.twitch.tv/AT-cm%7C${clip.tracking_id}.mp4' type="video/mp4">
                 </video>
-                <a target='_blank' class='link_broadcaster' href='${clip.broadcaster.channel_url}'>${clip.broadcaster.display_name}</a>
+                <div class='broadcaster'>
+                    <img src='${clip.broadcaster.logo}'>
+                    <a target='_blank' class='link_broadcaster' href='${clip.broadcaster.channel_url}'>${clip.broadcaster.display_name}</a>
+                </div>
                 <button class='share'>
                     зашарить
                 </button>
             </div>
             `
+
+            const video = document.querySelector('video')
+            let playFlag = 0
+
+            video.addEventListener('click', function() {
+                if (playFlag == 0) {
+                    video.play()
+                    playFlag = 1
+                } else {
+                    video.pause()
+                    playFlag = 0
+                }
+            })
 
             const like = document.querySelector('.share')
             like.addEventListener('click', function () {
@@ -230,7 +288,7 @@
         velocity: 0.1
     });
 
-    mc.on("swipeup", function (ev) {
+    mc.on("swipeup, swipeleft", function (ev) {
         targetClipsIndex++
         if (targetClipsIndex > clips.length) {
             targetClipsIndex = clips.length - 1
@@ -239,8 +297,7 @@
         }
     });
 
-    mc.on("swipedown", function (ev) {
-        console.log('down')
+    mc.on("swipedown, swiperight", function (ev) {
         targetClipsIndex--
         if (targetClipsIndex == -1) {
             targetClipsIndex = 0
