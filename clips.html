@@ -187,7 +187,7 @@
     }
 
     function getClips() {
-        return fetch(`https://api.twitch.tv/kraken/clips/top?game=${targetGame}&period=month&trending=true&limit=100&language=ru`, {
+        return fetch(`https://api.twitch.tv/kraken/clips/top?game=${targetGame}&period=day&trending=true&limit=100&language=ru`, {
             headers: {
                 'Accept': 'application/vnd.twitchtv.v5+json',
                 'Client-ID': 'ghotej777m8rk7kmsp5yp4oo9t3fjg'
@@ -288,7 +288,7 @@
         velocity: 0.1
     });
 
-    mc.on("swipeup, swipeleft", function (ev) {
+    mc.on("swipeup", function (ev) {
         targetClipsIndex++
         if (targetClipsIndex > clips.length) {
             targetClipsIndex = clips.length - 1
@@ -297,7 +297,25 @@
         }
     });
 
-    mc.on("swipedown, swiperight", function (ev) {
+    mc.on("swipeleft", function (ev) {
+        targetClipsIndex++
+        if (targetClipsIndex > clips.length) {
+            targetClipsIndex = clips.length - 1
+        } else {
+            drawClip()
+        }
+    });
+
+    mc.on("swiperight", function (ev) {
+        targetClipsIndex--
+        if (targetClipsIndex == -1) {
+            targetClipsIndex = 0
+        } else {
+            drawClip()
+        }
+    })
+
+    mc.on("swipedown", function (ev) {
         targetClipsIndex--
         if (targetClipsIndex == -1) {
             targetClipsIndex = 0
