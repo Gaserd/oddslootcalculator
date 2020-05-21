@@ -122,6 +122,18 @@ header {
     text-decoration: none;
 }
 
+.close {
+    padding: 5px 7px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    background-color: blueviolet;
+    text-decoration: none;
+}
+
 #time {
     position: absolute;
     width: 0.1%;

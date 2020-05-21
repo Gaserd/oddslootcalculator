@@ -11,8 +11,13 @@ function main() {
 
 function drawFirstInitPopup() {
     let modal = document.getElementById("myModal");
-    let span = document.getElementsByClassName("close")[0];
+    let close = document.querySelector(".close");
     modal.style.display = "block";
+
+    close.addEventListener('click', function() {
+        modal.style.display = "none";
+        localStorage.setItem('firstInit', 1)
+    })
 
     window.onclick = function (event) {
         if (event.target == modal) {
