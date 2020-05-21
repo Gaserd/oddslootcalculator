@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Highlights & Best Moments in the game</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Highlights & Best Moments in the game">
+    <meta name="keywords" content="highlights,moments,games">
+    <meta name="author" content="Gaserd">
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover">
+    <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-83599084-12"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-83599084-12');
+    </script>
+    <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+    <link rel="stylesheet" href='style.css'>
+    </link>
+</head>
+
+<body>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <h3>Добро пожаловать!</h3>
+            <p>Это приложение <b>Swipe Esport</b>, свайпай в любую сторону ролики и шарь их в свои истории ВКонтакте!</p>
+            <p>Чтобы начать смотреть, просто нажми на ролик.</p>
+            <p>Развлейкайся дружочек-пирожочек.</p>
+            <p>Так же не забывай подписывать на нашу групу <a href="vk.com/magma_gg" target="_blank">Magma.gg</a></p>
+        </div>
+    </div>
+    <div class="main">
+        <header>
+            <ul class="listGames">
+                <li class="game active" data-game='Counter-Strike: Global Offensive'>CS:GO</li>
+                <li class="game" data-game='League of Legends'>LoL</li>
+                <li class="game" data-game='VALORANT'>Valorant</li>
+                <li class="game" data-game='Dota 2'>Dota 2</li>
+                <li class="game" data-game='Fortnite'>Fortnite</li>
+                <li class="game" data-game='Minecraft'>Minecraft</li>
+            </ul>
+        </header>
+        <div class="mainBlockClips">
+
+        </div>
+    </div>
+</body>
+<script>
+    /*
+        CS:GO - 32399
+        LoL - 21779
+        Dota 2 - 29595
+        Valorant - 516575
+        Fortnite - 33214
+        Minecraft - 27471
+    */
+    vkBridge.send('VKWebAppInit');
+</script>
+<script src='./clips.js'></script>
+<script src='./main.js'></script>
+
+</html>
